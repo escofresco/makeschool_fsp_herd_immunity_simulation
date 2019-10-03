@@ -1,6 +1,6 @@
+from virus import Virus
 import random
 random.seed(42)
-from virus import Virus
 
 
 class Person(object):
@@ -31,6 +31,8 @@ class Person(object):
 
 
 ''' These are simple tests to ensure that you are instantiating your Person class correctly. '''
+
+
 def test_vacc_person_instantiation():
     # create some people to test if our init method works as expected
     person = Person(1, True)
