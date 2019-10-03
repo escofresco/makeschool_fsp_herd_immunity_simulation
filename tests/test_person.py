@@ -1,6 +1,7 @@
 import unittest
 
 from person import Person
+from virus import Virus
 
 class TestSuite(unittest.TestCase):
     ''' These are simple tests to ensure that you are instantiating your Person class correctly. '''
