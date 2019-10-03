@@ -3,9 +3,9 @@ import unittest
 from person import Person
 from virus import Virus
 
-class TestSuite(unittest.TestCase):
-    ''' These are simple tests to ensure that you are instantiating your Person class correctly. '''
 
+class TestSuite(unittest.TestCase):
+    """ These are simple tests to ensure that you are instantiating your Person class correctly. """
 
     def test_vacc_person_instantiation(self):
         # create some people to test if our init method works as expected
@@ -15,15 +15,11 @@ class TestSuite(unittest.TestCase):
         self.assertTrue(person.is_vaccinated)
         self.assertEqual(person.infection, None)
 
-
     def test_not_vacc_person_instantiation(self):
         person = Person(2, False)
         self.assertEqual(person._id, 2)
         self.assertFalse(person.is_vaccinated)
         self.assertEqual(person.infection, None)
-
-
-
 
     def test_sick_person_instantiation(self):
         # Create a Virus object to give a Person object an infection
@@ -34,7 +30,6 @@ class TestSuite(unittest.TestCase):
         self.assertTrue(person.is_alive)
         self.assertEqual(person._id, 3)
         self.assertEqual(person.infection, virus)
-
 
     def test_did_survive_infection(self):
         virus = Virus("Dysentery", 0.7, 0.2)
