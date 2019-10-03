@@ -12,7 +12,7 @@ class TestSuite(unittest.TestCase):
         self.assertEqual(person._id, 1)
         self.assertTrue(person.is_alive)
         self.assertTrue(person.is_vaccinated)
-        self.assertNone(person.infection)
+        self.assertEqual(person.infection, None)
 
 
     def test_not_vacc_person_instantiation(self):
