@@ -26,7 +26,7 @@ class TestSuite(unittest.TestCase):
         virus = Virus("Dysentery", 0.7, 0.2)
         # Create a Person object and give them the virus infection
         person = Person(3, False, virus)
-        self.assertEqual(person.is_vaccinated, True)
+        self.assertEqual(person.is_vaccinated, False)
         self.assertTrue(person.is_alive)
         self.assertEqual(person._id, 3)
         self.assertEqual(person.infection, virus)
