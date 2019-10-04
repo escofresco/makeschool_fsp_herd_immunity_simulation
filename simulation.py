@@ -15,7 +15,11 @@ class Simulation(object):
     infected people in a population are all variables that can be set when the program is run.
     '''
 
-    def __init__(self, pop_size: int, vacc_percentage: float, initial_infected=1, virus: Virus):
+    def __init__(self,
+                 pop_size: int,
+                 vacc_percentage: float,
+                 initial_infected=1,
+                 virus: Virus):
         ''' Logger object logger records all events during the simulation.
         Population represents all Persons in the population.
         The next_person_id is the next available id for all created Persons,
@@ -36,15 +40,15 @@ class Simulation(object):
         # and then reset .newly_infected back to an empty list.
         self.logger = Logger("logs.txt")
         self.population = self._create_population(
-            pop_size)  # List of Person objects
-        self.pop_size = pop_size  # Int
-        self.next_person_id = 0  # Int
-        self.virus = virus  # Virus object
-        self.initial_infected = initial_infected  # Int
-        self.total_infected = 0  # Int
-        self.current_infected = 0  # Int
-        self.vacc_percentage = vacc_percentage  # float between 0 and 1
-        self.total_dead = 0  # Int
+            pop_size)    # List of Person objects
+        self.pop_size = pop_size    # Int
+        self.next_person_id = 0    # Int
+        self.virus = virus    # Virus object
+        self.initial_infected = initial_infected    # Int
+        self.total_infected = 0    # Int
+        self.current_infected = 0    # Int
+        self.vacc_percentage = vacc_percentage    # float between 0 and 1
+        self.total_dead = 0    # Int
         self.file_name = "{}_simulation_pop_{}_vp_{}_infected_{}.txt".format(
             virus_name, population_size, vacc_percentage, initial_infected)
         self.newly_infected = []
@@ -88,9 +92,8 @@ class Simulation(object):
         while should_continue:
             # TODO: for every iteration of this loop, call self.time_step() to compute another
             # round of this simulation.
-        print('The simulation has ended after {time_step_counter} turns.'.format(
-            time_step_counter))
-        pass
+            pass
+        print(f'The simulation has ended after {time_step_counter} turns.')
 
     def time_step(self):
         ''' This method should contain all the logic for computing one time step
