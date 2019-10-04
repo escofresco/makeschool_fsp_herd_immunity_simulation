@@ -66,7 +66,7 @@ class TestSuite(unittest.TestCase):
         person2 = Person(7, True)
         self.test_logger.log_infection_survival(person2, False)
         last_line = self.temp_file.readlines()[-1]
-        self.assertEqual(last_line, f"{person2._id} died form infection")
+        self.assertEqual(last_line, f"{person2._id} died from infection")
 
 
     def test_time_step(self):
