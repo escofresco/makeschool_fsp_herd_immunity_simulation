@@ -8,7 +8,8 @@ class Logger(object):
         self.log_file = open(self.self.file, "a")
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        self.log_file.close()
+        if self.log_file:
+            self.log_file.close()
 
     def write_metadata(self, pop_size, vacc_percentage, virus_name,
                        mortality_rate, basic_repro_num):
