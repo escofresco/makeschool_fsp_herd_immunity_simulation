@@ -18,26 +18,20 @@ class Logger(object):
 
         '''The simulation class should use this method immediately to log the specific
         parameters of the simulation as the first line of the file.'''
-        temp_file.write('\t'.join([self.pop_size,
-                                   self.vacc_percentage,
-                                   self.virus_name,
-                                   self.mortality_rate,
-                                   self.basic_repro_num]))
+        self.log_file.write('\t'.join([self.pop_size,
+                                       self.vacc_percentage,
+                                       self.virus_name,
+                                       self.mortality_rate,
+                                       self.basic_repro_num]))
 
     def log_interaction(self, person, random_person, random_person_sick=None, random_person_vacc=None, did_infect=None):
-        self.person = person
-        self.random_person = random_person
-        self.random_person_sick = random_person_sick
-        self.random_person_vacc = random_person_vacc
-        self.did_infect = did_infect
-
         '''The Simulation object should use this method to log every interaction
         a sick person has during each time step
         The format of the log should be: "{person.ID} infects {random_person.ID} \n"
         or the other edge cases:
         "{person.ID} didn't infect {random_person.ID} because {'vaccinated' or 'already sick'} \n"'''
 
-        if self.person.is_vaccinated:
+        if person.is_vaccinated:
             print(f"{person._id} didn't infect {random_person._id} because {person.is_vaccinated or 'already sick'} \n")
         else:
             print(f"{person._id} infects {random_person._id} \n")
