@@ -12,19 +12,14 @@ class Logger(object):
 
     def write_metadata(self, pop_size, vacc_percentage, virus_name,
                        mortality_rate, basic_repro_num):
-        self.pop_size = pop_size
-        self.vacc_percentage = vacc_percentage
-        self.virus_name = virus_name
-        self.mortality_rate = mortality_rate
-        self.basic_repro_num = basic_repro_num
         """The simulation class should use this method immediately to log the specific
         parameters of the simulation as the first line of the file."""
         self.log_file.write("\t".join([
-            self.pop_size,
-            self.vacc_percentage,
-            self.virus_name,
-            self.mortality_rate,
-            self.basic_repro_num,
+            pop_size,
+            vacc_percentage,
+            virus_name,
+            mortality_rate,
+            basic_repro_num,
         ]))
 
     def log_interaction(self,
