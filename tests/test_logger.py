@@ -16,7 +16,12 @@ class TestSuite(unittest.TestCase):
         self.assertEqual(self.test_logger.file_name, self.temp_file_name)
 
     def test_writes_metadata_to_new_file(self):
-        pass
+        file_lines = self.temp.readlines()
+        self.assertEqual(len(file_lines), 0)
+
+        params = [100, .5, "big v", .9, 10]
+        self.test_logger.write_metadata(*params)
+        self.assertEqual(file_lines[0], '\t'.join(params))
 
     def test_writes_metadata_to_existing_file(self):
         pass
