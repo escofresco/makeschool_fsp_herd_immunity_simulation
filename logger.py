@@ -48,7 +48,7 @@ class Logger(object):
         The format of the log should be:
             "{person.ID} died from infection\n" or "{person.ID} survived infection.\n"
         """
-        self.log_file.write(f"{person._id} {"died if did_die_from_infection else survived"} infection.\n")
+        self.log_file.write(f"{person._id} {died if did_die_from_infection else survived} infection.\n")
 
     def resolve_infection(self):
         # if person survives infection print()
