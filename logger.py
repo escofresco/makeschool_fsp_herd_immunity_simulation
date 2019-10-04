@@ -37,9 +37,6 @@ class Logger(object):
             print(f"{person._id} infects {random_person._id} \n")
 
     def log_infection_survival(self, person, did_die_from_infection):
-        self.person = person
-        self.did_die_from_infection = did_die_from_infection
-
         ''' The Simulation object uses this method to log the results of every
         call of a Person object's .resolve_infection() method.
 
