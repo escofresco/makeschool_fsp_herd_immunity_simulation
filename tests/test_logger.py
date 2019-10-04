@@ -6,7 +6,7 @@ from logger import Logger
 class TestSuite(unittest.TestCase):
     def setUp(self):
         self.temp_file_name = 'temp_logs.txt'
-        temp = open(self.temp_file_name, 'w+')
+        self.temp = open(self.temp_file_name, 'w+')
 
     def tearDown(self):
         os.remove('temp_logs.txt')
