@@ -8,13 +8,10 @@ from virus import Virus
 class TestSuite(unittest.TestCase):
 
     def setUp(self):
-        self.temp_file_name = "temp_logs.txt"
-        self.temp_file = open(self.temp_file_name, "w+")
-        self.test_logger = Logger(self.temp_file_name)
+        self.temp_file_name = "test.txt"
 
     def tearDown(self):
-        self.temp_file.close()
-        os.remove(self.temp_file_name)
+        os.remove("./logs"+self.temp_file_name)
 
     def test_logger_initialization(self):
         self.assertEqual(self.test_logger.file_name, self.temp_file_name)
