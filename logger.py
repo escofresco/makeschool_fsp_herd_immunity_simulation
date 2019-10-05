@@ -16,24 +16,6 @@ class Logger(object):
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.log_file.close()
 
-    def write_metadata(
-        self, pop_size, vacc_percentage, virus_name, mortality_rate, basic_repro_num
-    ):
-        """The simulation class should use this method immediately to log the specific
-        parameters of the simulation as the first line of the file."""
-        self.log_file.write(
-            "\t".join(
-                [
-                    self.pop_size,
-                    self.vacc_percentage,
-                    self.virus_name,
-                    self.mortality_rate,
-                    self.basic_repro_num,
-                ]
-            )
-        )
-
-
     def __enter__(self):
         self.log_file = open(self.file_path, "w+")
         return self
