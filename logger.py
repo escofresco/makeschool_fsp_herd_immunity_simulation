@@ -11,12 +11,6 @@ class Logger(object):
             os.makedirs(self.log_dir)
 
     def __enter__(self):
-        self.log_file = open(self.self.file, "a")
-
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        self.log_file.close()
-
-    def __enter__(self):
         self.log_file = open(self.file_path, "w+")
         return self
 
