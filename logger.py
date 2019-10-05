@@ -1,9 +1,14 @@
+import os
+
 class Logger(object):
 
     def __init__(self, file_name, log_dir="logs"):
         self.file_name = file_name
         self.log_dir = "./" + log_dir.strip("/") + "/"
         self.file_path = self.log_dir + self.file_name
+
+        if not os.path.exists(self.log_dir):
+            os.makedirs(self.log_dir)
 
     def __enter__(self):
         self.log_file = open(self.file_path, "w+")
