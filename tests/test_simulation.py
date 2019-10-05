@@ -1,5 +1,5 @@
 import unittest
-
+from person import Person
 from virus import Virus
 from simulation import Simulation
 
@@ -11,7 +11,8 @@ class TestSuite(unittest.TestCase):
         self.norm_simulation = Simulation(100, 0.1, self.virus)
 
     def test_newly_infected(self):
-        pass
+        self.person = Person(6, False, self.virus)
+        self.person = Person(7, False, self.virus)
 
     def test_create_population(self):
-        pass
+        self.initial_infected = Simulation(100) 
