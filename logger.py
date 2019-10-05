@@ -1,7 +1,9 @@
 class Logger(object):
+
     def __init__(self, file_name, log_dir="logs"):
         self.file_name = file_name
         self.log_dir = "./" + log_dir.strip("/") + "/"
+<<<<<<< HEAD
 
     def __enter__(self):
         self.log_file = open(self.self.file, "a")
@@ -40,27 +42,66 @@ class Logger(object):
         random_person_vacc=None,
         did_infect=None,
     ):
+=======
+        self.file_path = self.log_dir + self.file_name
+
+    def __enter__(self):
+        self.log_file = open(self.file_path, "w+")
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if self.log_file:
+            self.log_file.close()
+
+    def write_metadata(self, pop_size, vacc_percentage, virus_name,
+                       mortality_rate, basic_repro_num):
+        """The simulation class should use this method immediately to log the specific
+        parameters of the simulation as the first line of the file."""
+        self.log_file.write("\t".join(map(str, [
+            pop_size,
+            vacc_percentage,
+            virus_name,
+            mortality_rate,
+            basic_repro_num,
+        ]))+"\n")
+
+    def log_interaction(self,
+                        person,
+                        random_person,
+                        random_person_sick=None,
+                        random_person_vacc=None,
+                        did_infect=None):
+>>>>>>> 9d6e3bcd77e924e72892c54ccb2eb663eadcf9f9
         '''The Simulation object should use this method to log every interaction
         a sick person has during each time step
         The format of the log should be: "{person.ID} infects {random_person.ID} \n"
         or the other edge cases:
-        "{person.ID} didn't infect {random_person.ID} because {'vaccinated' or 'already sick'} \n"'''
+        "{person.ID} didn't infect {random_person.ID} because {'vaccinated' or 'already sick'}\n"'''
 
         if person.is_vaccinated:
+<<<<<<< HEAD
             print(
                 f"{person._id} didn't infect {random_person._id} because {person.is_vaccinated or 'already sick'} \n"
+=======
+            self.log_file.write(
+                f"{person._id} didn't infect {random_person._id} because {person.is_vaccinated or 'already sick'}.\n"
+>>>>>>> 9d6e3bcd77e924e72892c54ccb2eb663eadcf9f9
             )
         else:
-            print(f"{person._id} infects {random_person._id} \n")
+            self.log_file.write(f"{person._id} infects {random_person._id}.\n")
 
     def log_infection_survival(self, person, did_die_from_infection):
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9d6e3bcd77e924e72892c54ccb2eb663eadcf9f9
         """ The Simulation object uses this method to log the results of every
         call of a Person object's .resolve_infection() method.
 
         The format of the log should be:
             "{person.ID} died from infection\n" or "{person.ID} survived infection.\n"
         """
+<<<<<<< HEAD
         # TODO: Finish this method. If the person survives, did_die_from_infection
         # should be False.  Otherwise, did_die_from_infection should be True.
         # Append the results of the infection to the logfile
@@ -73,6 +114,9 @@ class Logger(object):
         else:
             print(f"{person.ID} survived infection. \n")
         pass
+=======
+        self.log_file.write(f"{person._id} {'died from' if did_die_from_infection else 'survived'} infection.\n")
+>>>>>>> 9d6e3bcd77e924e72892c54ccb2eb663eadcf9f9
 
     def log_time_step(self, time_step_number):
         """ STRETCH CHALLENGE DETAILS:

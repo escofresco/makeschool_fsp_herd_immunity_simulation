@@ -5,6 +5,7 @@ from simulation import Simulation
 
 
 class TestSuite(unittest.TestCase):
+
     def setUp(self):
         self.virus = Virus("big V", 0.5, 0.75)
         self.norm_simulation = Simulation(100, 0.1, self.virus)

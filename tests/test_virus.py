@@ -4,6 +4,7 @@ from virus import Virus
 
 
 class TestSuite(unittest.TestCase):
+
     def test_virus_init_method(self):
         name = "big cough"
         repro_rate = 0.99
