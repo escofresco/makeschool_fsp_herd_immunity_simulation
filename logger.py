@@ -3,9 +3,11 @@ class Logger(object):
     def __init__(self, file_name, log_dir="logs"):
         self.file_name = file_name
         self.log_dir = "./" + log_dir.strip("/") + "/"
+        self.file_path = self.log_dir + self.file_name
 
     def __enter__(self):
-        self.log_file = open(self.self.file, "a")
+        self.log_file = open(self.file_path, "w+")
+        return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         if self.log_file:
@@ -15,13 +17,13 @@ class Logger(object):
                        mortality_rate, basic_repro_num):
         """The simulation class should use this method immediately to log the specific
         parameters of the simulation as the first line of the file."""
-        self.log_file.write("\t".join([
+        self.log_file.write("\t".join(map(str, [
             pop_size,
             vacc_percentage,
             virus_name,
             mortality_rate,
             basic_repro_num,
-        ]))
+        ]))+"\n")
 
     def log_interaction(self,
                         person,
@@ -33,14 +35,14 @@ class Logger(object):
         a sick person has during each time step
         The format of the log should be: "{person.ID} infects {random_person.ID} \n"
         or the other edge cases:
-        "{person.ID} didn't infect {random_person.ID} because {'vaccinated' or 'already sick'} \n"'''
+        "{person.ID} didn't infect {random_person.ID} because {'vaccinated' or 'already sick'}\n"'''
 
         if person.is_vaccinated:
-            print(
-                f"{person._id} didn't infect {random_person._id} because {person.is_vaccinated or 'already sick'} \n"
+            self.log_file.write(
+                f"{person._id} didn't infect {random_person._id} because {person.is_vaccinated or 'already sick'}.\n"
             )
         else:
-            print(f"{person._id} infects {random_person._id} \n")
+            self.log_file.write(f"{person._id} infects {random_person._id}.\n")
 
     def log_infection_survival(self, person, did_die_from_infection):
         """ The Simulation object uses this method to log the results of every
@@ -49,7 +51,7 @@ class Logger(object):
         The format of the log should be:
             "{person.ID} died from infection\n" or "{person.ID} survived infection.\n"
         """
-        self.log_file.write(f"{person._id} {died if did_die_from_infection else survived} infection.\n")
+        self.log_file.write(f"{person._id} {'died from' if did_die_from_infection else 'survived'} infection.\n")
 
     def log_time_step(self, time_step_number):
         """ STRETCH CHALLENGE DETAILS:
