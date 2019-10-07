@@ -9,7 +9,7 @@ class TestSuite(unittest.TestCase):
 
     def setUp(self):
         self.test_file_name = "test.txt"
-        self.test_file_path = "./logs/"+self.test_file_name
+        self.test_file_path = "./logs/" + self.test_file_name
 
     # def tearDown(self):
     #     os.remove("logs/"+self.test_file_name)
@@ -27,7 +27,8 @@ class TestSuite(unittest.TestCase):
         with Logger(self.test_file_name) as logger:
             logger.write_metadata(*params)
         with open(self.test_file_path, 'r') as test_file:
-            self.assertEqual(test_file.readline(), "\t".join(map(str, params))+"\n")
+            self.assertEqual(test_file.readline(),
+                             "\t".join(map(str, params)) + "\n")
         self.remove_test_file()
 
     def test_writes_metadata_to_existing_file(self):
@@ -37,8 +38,8 @@ class TestSuite(unittest.TestCase):
         person2 = Person(7, True)
         with Logger(self.test_file_name) as logger:
             logger.log_interaction(random_already_sick_person,
-                                             random_unvax_person,
-                                             did_infect=True)
+                                   random_unvax_person,
+                                   did_infect=True)
         with open(self.test_file_path, 'r') as test_file:
             last_line = test_file.readline()
             self.assertEqual(
@@ -54,8 +55,8 @@ class TestSuite(unittest.TestCase):
         random_already_sick_person = Person(6, False, eboola)
         with Logger(self.test_file_name) as logger:
             logger.log_interaction(random_already_sick_person,
-                                             random_vax_person,
-                                             did_infect=False)
+                                   random_vax_person,
+                                   did_infect=False)
         with open(self.test_file_path, 'r') as test_file:
             last_line = test_file.readline()
             self.assertEqual(
@@ -70,9 +71,9 @@ class TestSuite(unittest.TestCase):
         person1 = Person(4, False, eboola)
         random_already_sick_person = Person(6, False, eboola)
         with Logger(self.test_file_name) as logger:
-                logger.log_interaction(person1,
-                                                 random_already_sick_person,
-                                                 did_infect=False)
+            logger.log_interaction(person1,
+                                   random_already_sick_person,
+                                   did_infect=False)
         with open(self.test_file_path, 'r') as test_file:
             last_line = test_file.readline()
             self.assertEqual(
