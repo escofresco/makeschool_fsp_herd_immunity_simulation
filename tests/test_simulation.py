@@ -15,4 +15,11 @@ class TestSuite(unittest.TestCase):
         self.person = Person(7, False, self.virus)
 
     def test_create_population(self):
-        self.initial_infected = Simulation(100) 
+        population = self.norm_simulation._create_population(self.norm_simulation.initial_infected)
+        vaccinated_person_count = 0
+        infected_person_count = 0
+        for person in population:
+            vaccinated_person_count += int(person.is_vaccinated)
+            infected_person_count += 1 if person.infection else 0
+        self.assertEqual(vaccinated_person_count, self.norm_simulation.vacc_percentage * self.norm_simulation.pop_size)
+        self.assertEqual(infected_person_count, self.norm_simulation.initial_infected)
