@@ -1,5 +1,6 @@
 import os
 
+
 class Logger(object):
 
     def __init__(self, file_name, log_dir="logs"):
@@ -22,13 +23,14 @@ class Logger(object):
                        mortality_rate, basic_repro_num):
         """The simulation class should use this method immediately to log the specific
         parameters of the simulation as the first line of the file."""
-        self.log_file.write("\t".join(map(str, [
-            pop_size,
-            vacc_percentage,
-            virus_name,
-            mortality_rate,
-            basic_repro_num,
-        ]))+"\n")
+        self.log_file.write("\t".join(
+            map(str, [
+                pop_size,
+                vacc_percentage,
+                virus_name,
+                mortality_rate,
+                basic_repro_num,
+            ])) + "\n")
 
     def log_interaction(self,
                         person,
@@ -56,7 +58,9 @@ class Logger(object):
         The format of the log should be:
             "{person.ID} died from infection\n" or "{person.ID} survived infection.\n"
         """
-        self.log_file.write(f"{person._id} {'died from' if did_die_from_infection else 'survived'} infection.\n")
+        self.log_file.write(
+            f"{person._id} {'died from' if did_die_from_infection else 'survived'} infection.\n"
+        )
 
     def log_time_step(self, time_step_number):
         """ STRETCH CHALLENGE DETAILS:
