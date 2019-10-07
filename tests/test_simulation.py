@@ -1,31 +1,79 @@
+from collections import namedtuple
+from functools import wraps
 import unittest
+
 from person import Person
 from virus import Virus
 from simulation import Simulation
 
 
+def many_objects(func):
+
+    @wraps(func)
+    def wrapper(self, *args, **kwargs):
+        VirusArgs = namedtuple("VirusArgs", "name repro_rate mortality_rate")
+        SimulationArgs = namedtuple(
+            "SimulationArgs", "pop_size vacc_percentage virus initial_infected")
+        virus_args_tuples = [
+            VirusArgs("earth", 1, 0),
+            VirusArgs("wind", 0, 1),
+            VirusArgs("fire", .5, .25),
+            VirusArgs("big earth", .25, .75),
+        ]
+        simulation_args_list = [
+            [100, .1, None, 50],
+            [10000000, 0, None, 1000],
+            [10000000, .9, None, 1000],
+            [100, .5, None, 1],
+            [100, .5, None, 50],
+            [100, .5, None, 49],
+        ]
+
+        for simulation_args in simulation_args_list:
+            for virus_args_tuple in virus_args_tuples:
+                virus = Virus(*virus_args_tuple._asdict().values())
+                simulation_args[2] = virus
+                simulation_args_tuple = SimulationArgs(*simulation_args)
+                simulation = Simulation(
+                    *simulation_args_tuple._asdict().values())
+                func(
+                    self, {
+                        "virus": virus,
+                        "virus_args_tuples": virus_args_tuple,
+                        "simulation": simulation,
+                        "simulation_args_tuple": simulation_args_tuple
+                    })
+
+    return wrapper
+
+
 class TestSuite(unittest.TestCase):
 
-    def setUp(self):
-        self.virus = Virus("big V", 0.5, 0.75)
-        self.norm_simulation = Simulation(100, 0.1, self.virus)
+    @many_objects
+    def test_initialization(self, kwargs):
+        for i, (k, v) in enumerate(
+                kwargs["simulation_args_tuple"]._asdict().items()):
+            with self.subTest(i=i):
+                # For each subtest, compare the value passed to the simulation
+                # object and the corresponding instance variable in simulation
+                self.assertEqual(kwargs["simulation"].__dict__[k], v)
 
     def test_newly_infected(self):
-        self.person = Person(6, False, self.virus)
-        self.person = Person(7, False, self.virus)
+        pass
 
-    def test_create_population(self):
-        population = self.norm_simulation._create_population(
-            self.norm_simulation.initial_infected)
-        vaccinated_person_count = 0
-        infected_person_count = 0
-        for person in population:
-            vaccinated_person_count += int(person.is_vaccinated)
-            infected_person_count += 1 if person.infection else 0
-        self.assertEqual(
-            vaccinated_person_count, self.norm_simulation.vacc_percentage *
-            self.norm_simulation.pop_size)
-        self.assertEqual(infected_person_count,
-                         self.norm_simulation.initial_infected)
+    def test_create_population(self, kwargs):
+        pass
 
-    def 
+    # def test_create_population(self):
+    #     population = self.norm_simulation._create_population(
+    #         self.norm_simulation.initial_infected)
+    #     vaccinated_person_count = 0
+    #     infected_person_count = 0
+    #     for person in population:
+    #         vaccinated_person_count += int(person.is_vaccinated)
+    #         infected_person_count += 1 if person.infection else 0
+    #     self.assertEqual(
+    #         vaccinated_person_count, self.norm_simulation.vacc_percentage *
+    #         self.norm_simulation.pop_size)
+    #     self.assertEqual(infected_person_count,
+    #                      self.norm_simulation.initial_infected)
