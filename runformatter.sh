@@ -1,1 +1,1 @@
-yapf -ir --style setup.cfg .
+python3 -m yapf -ir --style setup.cfg .
