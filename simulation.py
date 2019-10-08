@@ -63,7 +63,19 @@ class Simulation(object):
                 list: A list of Person objects.
 
         '''
-        pass
+        people_list = []
+        vaccinated_count = self.vacc_percentage * self.pop_size
+        for infected_person in range(initial_infected):
+            people_list.append(
+                Person(infected_person, False, infection=self.virus))
+
+        for vaccinated_person in range(initial_infected,
+                                       initial_infected + vaccinated_count):
+            people_list.append(Person(vaccinated_person, True, infection=None))
+
+        for person in range(initial_infected + vaccinated_count, self.pop_size):
+            people_list.append(Person(person, False, infection=None))
+        return people_list
 
     def _simulation_should_continue(self):
         ''' The simulation should only end if the entire population is dead
@@ -72,8 +84,12 @@ class Simulation(object):
             Returns:
                 bool: True for simulation should continue, False if it should end.
         '''
-        # TODO: Complete this helper method.  Returns a Boolean.
-        pass
+        # TODO: Complete this helper method. Returns a Boolean.
+        if (self.total_dead > self.pop_size):
+            return False
+
+        if (self.vacc_percentage == 1):
+            return False
 
     def run(self):
         ''' This method should run the simulation until all requirements for ending
@@ -82,6 +98,7 @@ class Simulation(object):
         # TODO: Finish this method.  To simplify the logic here, use the helper method
         # _simulation_should_continue() to tell us whether or not we should continue
         # the simulation and run at least 1 more time_step.
+        _simulation_should_continue()
 
         # TODO: Keep track of the number of time steps that have passed.
         # HINT: You may want to call the logger's log_time_step() method at the end of each time step.

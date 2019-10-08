@@ -63,13 +63,19 @@ class TestSuite(unittest.TestCase):
 
     @many_objects
     def test_create_population(self, kwargs):
-        population = kwargs["simulation"]._create_population(kwargs["simulation_args_tuple"].initial_infected)
+        population = kwargs["simulation"]._create_population(
+            kwargs["simulation_args_tuple"].initial_infected)
         result_infected_person_count = 0
         result_vaccinated_person_count = 0
-        expected_infected_person_count = kwargs["simulation_args_tuple"].initial_infected
-        expected_vaccinated_person_count = (kwargs["simulation"].vacc_percentage * kwargs["simulation_args_tuple"].pop_size)
+        expected_infected_person_count = kwargs[
+            "simulation_args_tuple"].initial_infected
+        expected_vaccinated_person_count = (
+            kwargs["simulation"].vacc_percentage *
+            kwargs["simulation_args_tuple"].pop_size)
         for person in population:
             result_infected_person_count += 1 if person.infection else 0
             result_vaccinated_person_count += person.is_vaccinated
-        self.assertEqual(result_infected_person_count, expected_infected_person_count)
-        self.assertEqual(result_vaccinated_person_count, expected_vaccinated_person_count)
+        self.assertEqual(result_infected_person_count,
+                         expected_infected_person_count)
+        self.assertEqual(result_vaccinated_person_count,
+                         expected_vaccinated_person_count)
