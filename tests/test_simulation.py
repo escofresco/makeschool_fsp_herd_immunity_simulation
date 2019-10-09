@@ -20,14 +20,14 @@ def many_objects(func):
             VirusArgs("fire", .5, .25),
             VirusArgs("big earth", .25, .75),
         ]
-        simulation_args_list = [
-            [100, .1, None, 50],
-            [10000000, 0, None, 1000],
-            [10000000, .9, None, 1000],
-            [100, .5, None, 1],
-            [100, .5, None, 50],
-            [100, .5, None, 49],
-        ]
+        simulation_args_list = [[100, .1, None, 50], [10000000, 0, None, 1000],
+                                [10000000000000, .9, None, 1000],
+                                [100, .5, None, 1], [100, .5, None, 50],
+                                [100, .5, None, 49], [
+                                    2,
+                                    .5,
+                                    None,
+                                ]]
 
         for simulation_args in simulation_args_list:
             for virus_args_tuple in virus_args_tuples:
@@ -63,13 +63,22 @@ class TestSuite(unittest.TestCase):
 
     @many_objects
     def test_create_population(self, kwargs):
-        population = kwargs["simulation"]._create_population(kwargs["simulation_args_tuple"].initial_infected)
+        population = kwargs["simulation"]._create_population(
+            kwargs["simulation_args_tuple"].initial_infected)
         result_infected_person_count = 0
         result_vaccinated_person_count = 0
-        expected_infected_person_count = kwargs["simulation_args_tuple"].initial_infected
-        expected_vaccinated_person_count = (kwargs["simulation"].vacc_percentage * kwargs["simulation_args_tuple"].pop_size)
+        expected_infected_person_count = kwargs[
+            "simulation_args_tuple"].initial_infected
+        expected_vaccinated_person_count = (
+            kwargs["simulation"].vacc_percentage *
+            kwargs["simulation_args_tuple"].pop_size)
         for person in population:
             result_infected_person_count += 1 if person.infection else 0
             result_vaccinated_person_count += person.is_vaccinated
-        self.assertEqual(result_infected_person_count, expected_infected_person_count)
-        self.assertEqual(result_vaccinated_person_count, expected_vaccinated_person_count)
+        self.assertEqual(result_infected_person_count,
+                         expected_infected_person_count)
+        self.assertEqual(result_vaccinated_person_count,
+                         expected_vaccinated_person_count)
+
+    # @many_objects
+    # def test_

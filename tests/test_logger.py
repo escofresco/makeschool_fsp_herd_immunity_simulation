@@ -27,7 +27,7 @@ class TestSuite(unittest.TestCase):
         with Logger(self.test_file_name) as logger:
             logger.write_metadata(*params)
         with open(self.test_file_path, 'r') as test_file:
-            self.assertEqual(test_file.readline(),
+            self.assertEqual(test_file.readlines()[1],
                              "\t".join(map(str, params)) + "\n")
         self.remove_test_file()
 
