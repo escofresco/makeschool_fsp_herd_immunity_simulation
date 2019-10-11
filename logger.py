@@ -23,6 +23,10 @@ class Logger(object):
                        mortality_rate, basic_repro_num):
         """The simulation class should use this method immediately to log the specific
         parameters of the simulation as the first line of the file."""
+        self.log_file.write("\t".join([
+            "pop_size", "vacc_percentage", "virus_name", "mortality_rate",
+            "basic_repro_num"
+        ]) + "\n")
         self.log_file.write("\t".join(
             map(str, [
                 pop_size,
