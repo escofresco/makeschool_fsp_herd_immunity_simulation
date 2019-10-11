@@ -2,6 +2,7 @@ from collections import namedtuple
 from functools import wraps
 import unittest
 
+from logger import Logger
 from person import Person
 from virus import Virus
 from simulation import Simulation
@@ -13,32 +14,33 @@ def many_objects(func):
     def wrapper(self, *args, **kwargs):
         VirusArgs = namedtuple("VirusArgs", "name repro_rate mortality_rate")
         SimulationArgs = namedtuple(
-            "SimulationArgs", "pop_size vacc_percentage virus initial_infected")
+            "SimulationArgs", "pop_size vacc_percentage virus logger initial_infected")
         virus_args_tuples = [
             VirusArgs("earth", 1, 0),
             VirusArgs("wind", 0, 1),
             VirusArgs("fire", .5, .25),
             VirusArgs("big earth", .25, .75),
         ]
-        simulation_args_list = [[100, .1, None, 50], [100000, 0, None, 1000],
-                                [100000, .9, None, 100], [100, .5, None, 1],
-                                [100, .5, None, 50], [100, .5, None, 49],
-                                [2, .5, None, 0]]
+        with Logger("sim_test_log.txt") as logger:
+            simulation_args_list = [[100, .1, None, logger, 50], [100000, 0, None, logger, 1000],
+                                    [100000, .9, None, logger, 100], [100, .5, None, logger, 1],
+                                    [100, .5, None, logger, 50], [100, .5, None, logger, 49],
+                                    [2, .5, None, logger, 0]]
 
-        for simulation_args in simulation_args_list:
-            for virus_args_tuple in virus_args_tuples:
-                virus = Virus(*virus_args_tuple._asdict().values())
-                simulation_args[2] = virus
-                simulation_args_tuple = SimulationArgs(*simulation_args)
-                simulation = Simulation(
-                    *simulation_args_tuple._asdict().values())
-                func(
-                    self, {
-                        "virus": virus,
-                        "virus_args_tuples": virus_args_tuple,
-                        "simulation": simulation,
-                        "simulation_args_tuple": simulation_args_tuple
-                    })
+            for simulation_args in simulation_args_list:
+                for virus_args_tuple in virus_args_tuples:
+                    virus = Virus(*virus_args_tuple._asdict().values())
+                    simulation_args[2] = virus
+                    simulation_args_tuple = SimulationArgs(*simulation_args)
+                    simulation = Simulation(
+                        *simulation_args_tuple._asdict().values())
+                    func(
+                        self, {
+                            "virus": virus,
+                            "virus_args_tuples": virus_args_tuple,
+                            "simulation": simulation,
+                            "simulation_args_tuple": simulation_args_tuple
+                        })
 
     return wrapper
 
