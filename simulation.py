@@ -50,6 +50,7 @@ class Simulation(object):
         self.file_name = "{}_simulation_pop_{}_vp_{}_infected_{}.txt".format(
             self.virus.name, pop_size, vacc_percentage, initial_infected)
         self.newly_infected = []
+        self.vacc_that_prevented_infection = 0
         self.population = self._create_population(self.initial_infected)
         self.logger.write_metadata(self.pop_size, self.vacc_percentage,
                                    self.virus.name, self.virus.mortality_rate,
@@ -64,20 +65,18 @@ class Simulation(object):
         Returns:
         list: A list of Person objects.
         '''
-        people_list = []
-        for infected_person in range(initial_infected):
-            people_list.append(
-                Person(infected_person, False, infection=self.virus))
-
-        for vaccinated_person in range(initial_infected,
-                                       initial_infected + self.vacc_count):
-            people_list.append(Person(vaccinated_person, True, infection=None))
-
-        for healthy_person in range(initial_infected + self.vacc_count,
-                                    self.pop_size):
-            people_list.append(Person(healthy_person, False, infection=None))
-
-        return people_list
+        return [
+            Person(infected_person, False, infection=self.virus)
+            for infected_person in range(initial_infected)
+        ] + [
+            Person(vaccinated_person, True, infection=None)
+            for vaccinated_person in range(initial_infected, initial_infected +
+                                           self.vacc_count)
+        ] + [
+            Person(healthy_person, False, infection=None)
+            for healthy_person in range(initial_infected +
+                                        self.vacc_count, self.pop_size)
+        ]
 
     def _simulation_should_continue(self):
         ''' The simulation should only end if the entire population is dead
@@ -167,6 +166,8 @@ class Simulation(object):
                                             bool(random_person.is_vaccinated),
                                             did_infect=True)
         else:
+            if random_person.is_vaccinated:
+                self.vacc_that_prevented_infection += 1
             self.logger.log_interaction(person, random_person,
                                         bool(random_person.infection),
                                         bool(random_person.is_vaccinated))
@@ -182,6 +183,7 @@ class Simulation(object):
         for person in self.newly_infected:
             person.infection = self.virus
             did_survive = person.did_survive_infection()
+            print(f'did survive: {did_survive}')
             self.logger.log_infection_survival(person, not did_survive)
             self.vacc_count += did_survive
             self.total_dead += not did_survive
@@ -211,4 +213,4 @@ if __name__ == "__main__":
                          initial_infected=initial_infected)
 
         sim.run()
-        print(sim.total_infected)
+        print(f"{ sim.total_infected }\n{ sim.vacc_that_prevented_infection }")
