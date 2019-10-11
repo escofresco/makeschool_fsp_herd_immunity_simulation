@@ -85,9 +85,6 @@ class Simulation(object):
         Returns:
         bool: True for simulation should continue, False if it should end.
         '''
-        print(f"total dead: {self.total_dead}")
-        print(f"pop size: {self.pop_size}")
-        print(f"vacc count: {self.vacc_count}")
         return not (self.total_dead >= self.pop_size
                     or self.vacc_count + self.total_dead == self.pop_size)
 
