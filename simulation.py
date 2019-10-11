@@ -86,7 +86,11 @@ class Simulation(object):
         Returns:
         bool: True for simulation should continue, False if it should end.
         '''
-        return self.total_dead < self.pop_size and self.vacc_count < self.pop_size
+        print(f"total dead: {self.total_dead}")
+        print(f"pop size: {self.pop_size}")
+        print(f"vacc count: {self.vacc_count}")
+        return not (self.total_dead >= self.pop_size
+                    or self.vacc_count + self.total_dead == self.pop_size)
 
     def run(self):
         ''' This method should run the simulation until all requirements for ending
@@ -154,7 +158,7 @@ class Simulation(object):
         #     Simulation object's newly_infected array, so that their .infected
         #     attribute can be changed to True at the end of the time step.
         # TODO: Call slogger method during this method.
-        if not (random_person.is_vaccinated or random_person.infection):
+        if not (random_person.is_vaccinated or bool(random_person.infection)):
             if random.random() < self.virus.repro_rate:
                 self.newly_infected.append(random_person)
                 self.logger.log_interaction(person,
@@ -162,9 +166,10 @@ class Simulation(object):
                                             bool(random_person.infection),
                                             bool(random_person.is_vaccinated),
                                             did_infect=True)
-        self.logger.log_interaction(person, random_person,
-                                    bool(random_person.infection),
-                                    bool(random_person.is_vaccinated))
+        else:
+            self.logger.log_interaction(person, random_person,
+                                        bool(random_person.infection),
+                                        bool(random_person.is_vaccinated))
 
     def _infect_newly_infected(self):
         ''' This method should iterate through the list of ._id stored in self.newly_infected
@@ -173,6 +178,7 @@ class Simulation(object):
         # TODO: Once you have iterated through the entire list of self.newly_infected, remember
         # to reset self.newly_infected back to an empty list.
         #print(self.newly_infected)
+        self.total_infected += len(self.newly_infected)
         for person in self.newly_infected:
             person.infection = self.virus
             did_survive = person.did_survive_infection()
@@ -205,3 +211,4 @@ if __name__ == "__main__":
                          initial_infected=initial_infected)
 
         sim.run()
+        print(sim.total_infected)
