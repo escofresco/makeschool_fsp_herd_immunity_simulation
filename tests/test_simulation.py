@@ -14,7 +14,8 @@ def many_objects(func):
     def wrapper(self, *args, **kwargs):
         VirusArgs = namedtuple("VirusArgs", "name repro_rate mortality_rate")
         SimulationArgs = namedtuple(
-            "SimulationArgs", "pop_size vacc_percentage virus logger initial_infected")
+            "SimulationArgs",
+            "pop_size vacc_percentage virus logger initial_infected")
         virus_args_tuples = [
             VirusArgs("earth", 1, 0),
             VirusArgs("wind", 0, 1),
@@ -22,9 +23,12 @@ def many_objects(func):
             VirusArgs("big earth", .25, .75),
         ]
         with Logger("sim_test_log.txt") as logger:
-            simulation_args_list = [[100, .1, None, logger, 50], [100000, 0, None, logger, 1000],
-                                    [100000, .9, None, logger, 100], [100, .5, None, logger, 1],
-                                    [100, .5, None, logger, 50], [100, .5, None, logger, 49],
+            simulation_args_list = [[100, .1, None, logger, 50],
+                                    [100000, 0, None, logger, 1000],
+                                    [100000, .9, None, logger, 100],
+                                    [100, .5, None, logger, 1],
+                                    [100, .5, None, logger, 50],
+                                    [100, .5, None, logger, 49],
                                     [2, .5, None, logger, 0]]
 
             for simulation_args in simulation_args_list:
