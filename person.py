@@ -26,7 +26,8 @@ class Person(object):
         If Person survives, they become vaccinated and they have no infection.
         Return a boolean value indicating whether they survived the infection.
         """
-        survived = random.random() < self.infection.mortality_rate
+        survived = random.random() > self.infection.mortality_rate
         self.is_alive = survived
         self.is_vaccinated = survived
+        self.infection = None
         return survived
