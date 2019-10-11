@@ -1,0 +1,7 @@
+1. virus: rabies, contagiousness: 5%, chance of death: 100%, sample size: 1500, ratio vaccinated: 10%
+
+2. 90%
+
+3. 10%
+
+4. 14312
