@@ -20,14 +20,10 @@ def many_objects(func):
             VirusArgs("fire", .5, .25),
             VirusArgs("big earth", .25, .75),
         ]
-        simulation_args_list = [[100, .1, None, 50], [10000000, 0, None, 1000],
-                                [10000000000000, .9, None, 1000],
-                                [100, .5, None, 1], [100, .5, None, 50],
-                                [100, .5, None, 49], [
-                                    2,
-                                    .5,
-                                    None,
-                                ]]
+        simulation_args_list = [[100, .1, None, 50], [100000, 0, None, 1000],
+                                [100000, .9, None, 100], [100, .5, None, 1],
+                                [100, .5, None, 50], [100, .5, None, 49],
+                                [2, .5, None, 0]]
 
         for simulation_args in simulation_args_list:
             for virus_args_tuple in virus_args_tuples:
