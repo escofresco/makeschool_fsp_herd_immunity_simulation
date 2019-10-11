@@ -86,7 +86,7 @@ class Simulation(object):
         bool: True for simulation should continue, False if it should end.
         '''
         return not (self.total_dead >= self.pop_size
-                    or self.vacc_count + self.total_dead == self.pop_size)
+                    or self.vacc_count + self.total_dead >= self.pop_size)
 
     def run(self):
         ''' This method should run the simulation until all requirements for ending
